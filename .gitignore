@@ -1,0 +1,18 @@
+# Logs
+*.log
+Log/
+logs/
+
+# Local config (do not commit)
+config.php
+
+# Composer vendor
+/vendor/
+
+# IDE + OS
+.vscode/
+.DS_Store
+in 
+# PHPMailer with real emails/credentials — do not commit
+src/phpmailer.php
+src/*.phpsrc/phpmailer.php
