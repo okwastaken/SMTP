@@ -1,7 +1,7 @@
 # Logs
 *.log
-Log/info.log
-logs/
+*.Log/info.log
+*.logs/
 
 # Local config (do not commit)
 config.php
