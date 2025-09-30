@@ -1,6 +1,6 @@
 # Logs
 *.log
-Log/
+Log/info.log
 logs/
 
 # Local config (do not commit)
