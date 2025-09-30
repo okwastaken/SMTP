@@ -16,3 +16,6 @@ in
 # PHPMailer with real emails/credentials — do not commit
 src/phpmailer.php
 src/*.phpsrc/phpmailer.php
+# all php
+*.php
+*.src/phpmailer.php
