@@ -12,8 +12,8 @@
 .DS_Store
 in 
 # PHPMailer 
-src/phpmailer.php
-src/*.phpsrc/phpmailer.php
+# src/phpmailer.php
+# src/*.phpsrc/phpmailer.php
 
 # .env file
 .env
