@@ -1,38 +1,34 @@
  
  <?php
- 
-require __DIR__ . '../vendor/autoload.php';
+
+    require __DIR__ . '/../vendor/autoload.php';
 
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use Monolog\Level;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Dotenv\Dotenv;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    use Monolog\Level;
+    use Monolog\Logger;
+    use Monolog\Handler\StreamHandler;
+    use Dotenv\Dotenv;
 
-// .env staat in dezelfde directory als index.php
-$dotenv = Dotenv::createImmutable(__DIR__ . '../.env'); // root van project
 
-// echo "Zoekt naar .env in: " . __DIR__ . "<br>"; 
-// echo "Bestand bestaat: " . (file_exists(__DIR__ . '/.env') ? 'JA' : 'NEE') . "<br>";
 
-$dotenv->load();
+    $dotenv = Dotenv::createImmutable( '../');
+    $dotenv->load();
 
-    $onderwerp = "Bevestiging van je klacht";
-
-    echo  " <form action='index.php' method='POST'>
-                <label for=''>Naam</label>
-                <input type='text' name='Naam'>
-                <br>
-                <label for='Email'>Email</label>
-                <input type='text' name='Email'>
-                <br>
-                <label for='Beschrijvingklacht'>Omschrijf je klacht</label>
-                <input type='text' name='Beschrijvingklacht'>
-                <br>
-                <input type='submit' value='verstuur'>
-            </form>";
+    // formulier: action naar hetzelfde bestand (veilig)
+    echo  "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "' method='POST'>
+            <label for='Naam'>Naam</label>
+            <input type='text' name='Naam' id='Naam'>
+            <br>
+            <label for='Email'>Email</label>
+            <input type='email' name='Email' id='Email'>
+            <br>
+            <label for='Beschrijvingklacht'>Omschrijf je klacht</label>
+            <input type='text' name='Beschrijvingklacht' id='Beschrijvingklacht'>
+            <br>
+            <input type='submit' value='verstuur'>
+        </form>";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $naam = $_POST['Naam'];
