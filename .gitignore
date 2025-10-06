@@ -2,9 +2,7 @@
 *.Log
 *.Log/info.log
 *.Log/
-
-# Local config (do not commit)
-config.php
+*.log
 
 # Composer vendor
 /vendor/
@@ -13,9 +11,9 @@ config.php
 .vscode/
 .DS_Store
 in 
-# PHPMailer with real emails/credentials — do not commit
+# PHPMailer 
 src/phpmailer.php
 src/*.phpsrc/phpmailer.php
-# all php
-*.php
-*.src/phpmailer.php
+
+# .env file
+.env
