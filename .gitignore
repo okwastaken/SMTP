@@ -1,6 +1,6 @@
 #alle log bestanden
-**/Log/
-**/log/
+Log
+Log/*
 **/logs/
 *.log
 *.Log
