@@ -1,20 +1,24 @@
  
  <?php
-    require './vendor/autoload.php';
-
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-    use Monolog\Level;
-    use Monolog\Logger;
-    use Monolog\Handler\StreamHandler;
-
-    // create a log channel
+ 
+require __DIR__ . '../vendor/autoload.php';
 
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Dotenv\Dotenv;
 
+// .env staat in dezelfde directory als index.php
+$dotenv = Dotenv::createImmutable(__DIR__ . '../.env'); // root van project
 
+// echo "Zoekt naar .env in: " . __DIR__ . "<br>"; 
+// echo "Bestand bestaat: " . (file_exists(__DIR__ . '/.env') ? 'JA' : 'NEE') . "<br>";
 
-   
+$dotenv->load();
+
     $onderwerp = "Bevestiging van je klacht";
 
     echo  " <form action='index.php' method='POST'>
@@ -40,7 +44,7 @@
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = $mijnemail;
+            $mail->Username = $_ENV['MIJN_EMAIL'];
             //$_ENV om wachtwoord uit de .env te halen
             $mail->Password = $_ENV['EMAIL_PASSWORD'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
@@ -53,9 +57,10 @@
                     'allow_self_signed' => true
                 )
             );
-            $mail->setFrom($mijnemail,  'Klantenservice');
+            $mail->setFrom($_ENV['MIJN_EMAIL'], 'Klantenservice');
             $mail->addAddress($email, $naam);
-            $mail->addCC($mijnemail);
+
+            $mail->addCC($_ENV['MIJN_EMAIL']);
 
             $mail->isHTML(false);
             $mail->Subject = 'Bevestiging van je klacht';
@@ -63,13 +68,13 @@
             $mail->send();
 
             $log = new Logger('mailer');
-           $logFile = '../Log/info.log';
+            $logFile = '../Log/info.log';
 
             $log->pushHandler(new StreamHandler($logFile, Level::Info));
             $log->info('E-mail is verzonden naar ' . $email . $beschrijvingklacht);
             $log->debug('debug');
 
-            $log->warning('Dit is een warning');
+            $log->warning('Dit is een waarschuwings bericht');
             $log->error('Dit is een error');
 
 
