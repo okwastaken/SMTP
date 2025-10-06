@@ -1,14 +1,15 @@
-Log
-Log/*
-*.Log
-*.Log/info.log
-*.Log/
+#alle log bestanden
+**/Log/
+**/log/
+**/logs/
 *.log
+*.Log
+./info.log
 
 # Composer vendor
 /vendor/
 
-# IDE + OS
+    
 .vscode/
 .DS_Store
 in 
