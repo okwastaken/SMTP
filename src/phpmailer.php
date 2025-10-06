@@ -3,7 +3,7 @@
 
     require __DIR__ . '/../vendor/autoload.php';
 
-
+//plugins die ik geinstalleerd heb via composer
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
     use Monolog\Level;
@@ -34,18 +34,22 @@
         $naam = $_POST['Naam'];
         $email = $_POST['Email'];
         $beschrijvingklacht = $_POST['Beschrijvingklacht'];
+        
         $mail = new PHPMailer(true);
 
         try {
+            // initialiseer SMTP
             $mail->isSMTP();
+            // dit is de host van gmail
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
+            // $_ENV om email eruit te halen
             $mail->Username = $_ENV['MIJN_EMAIL'];
             //$_ENV om wachtwoord uit de .env te halen
             $mail->Password = $_ENV['EMAIL_PASSWORD'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
-            //oplossing voor het probleem waar hij het niet wou versturen
+            //oplossing voor het probleem waar hij het niet wou versturen ergens setting in email maar kreeg niet gevonden wat tergen werkte
             $mail->SMTPOptions = array(
                 'ssl' => array(
                     'verify_peer' => false,
@@ -53,19 +57,19 @@
                     'allow_self_signed' => true
                 )
             );
+            // onderwerp die je tezien krijgt in je email
             $mail->setFrom($_ENV['MIJN_EMAIL'], 'Klantenservice');
             $mail->addAddress($email, $naam);
-
             $mail->addCC($_ENV['MIJN_EMAIL']);
 
             $mail->isHTML(false);
             $mail->Subject = 'Bevestiging van je klacht';
             $mail->Body = "Beste $naam,\n\nWe hebben je klacht ontvangen en zullen deze zo snel mogelijk behandelen.\n\nMet vriendelijke groet,\nKlantenservice";
             $mail->send();
-
+            //log bestand aanmaken
             $log = new Logger('mailer');
             $logFile = '../Log/info.log';
-
+            
             $log->pushHandler(new StreamHandler($logFile, Level::Info));
             $log->info('E-mail is verzonden naar ' . $email . $beschrijvingklacht);
             $log->debug('debug');
